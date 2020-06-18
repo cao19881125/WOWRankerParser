@@ -13,7 +13,7 @@ def svc():
     loader = wsgi.Loader(cfg.CONF)
     wsgi_app = loader.load_app('rank-parser')
 
-    server = pywsgi.WSGIServer(('0.0.0.0', 8080), wsgi_app)
+    server = pywsgi.WSGIServer(('127.0.0.1', 8181), wsgi_app)
     server.serve_forever()
 
 def main():
