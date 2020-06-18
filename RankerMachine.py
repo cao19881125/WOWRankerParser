@@ -23,7 +23,7 @@ class RankerMachine:
         data['Warrior'] = {'MoltenCore':[],'BlackwingLair':[]}
 
         # 盗贼
-        data['Rouge'] = {'MoltenCore':[],'BlackwingLair':[]}
+        data['Rogue'] = {'MoltenCore':[],'BlackwingLair':[]}
 
         # 法师
         data['Mage'] = {'MoltenCore':[],'BlackwingLair':[]}

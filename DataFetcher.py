@@ -36,8 +36,12 @@ class DataFetcher:
         raidRankDivs = soup.find_all('div','header-zone-box')
 
         for index in range(len(raidRankDivs)):
+            zon_name = unicode(raidRankDivs[index].find_all('div', 'header-zone-points')[0].contents[0].string).strip()
+            if zon_name != "P3 & P4":
+                continue
             raidName = unicode(raidRankDivs[index].find_all('div','header-zone-name')[0].contents[0].string).strip()
             score = int(unicode(raidRankDivs[index].find_all('span','primary header-rank')[0].contents[0].string))
+
             rank =  int(unicode(raidRankDivs[index].find_all('div','header-zone-positions')[0].find_all('span')[0].contents[0].string))
             result[raidName] = {
                 'score':score,
