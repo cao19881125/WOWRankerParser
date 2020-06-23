@@ -41,11 +41,13 @@ def main():
         playerManager.addPlayer(server,name)
 
     while(True):
-        print "start update"
+        print "start update player data"
         playerManager.refreshData()
         rankerMachine.refreshData(playerManager.players)
+        print "stop update player data"
+        print "start update server rank data"
         playerManager.refreshServerRank()
-        print "stop update"
+        print "stop update server rank data"
 
         time.sleep(3600)
 
