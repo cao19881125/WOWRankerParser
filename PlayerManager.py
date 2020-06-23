@@ -22,6 +22,14 @@ class PlayerManager:
 
         self.players[server][name] = Player.Player(server,name)
 
+    def getPlayerByClass(self,playerClass):
+        result = []
+        for server in self.players:
+            for name in self.players[server]:
+                if self.players[server][name].playerClass == playerClass:
+                    result.append(self.players[server][name])
+
+        return result
     def refreshData(self):
         for server in self.players:
             for pkey in self.players[server]:
@@ -39,6 +47,40 @@ class PlayerManager:
                         player.MoltenCoreRank = result['Molten Core']['rank']
                 except Exception, e:
                     pass
+    def refreshServerRank(self):
+        classList = {'Warrior':{'num':800,'spec':'Fury'},
+                     'Mage':{'num':800,'spec':'Frost'},
+                     'Rogue':{'num':800,'spec':'Assassination'},
+                     'Hunter':{'num':500,'spec':'Marksmanship'},
+                     'Warlock':{'num':300,'spec':'Destruction'},
+                     'Druid':{'num':300,'spec':'Restoration'},
+                     'Paladin':{'num':500,'spec':'Holy'},
+                     'Priest':{'num':500,'spec':'Holy'}}
+
+        #classList = {'Mage': {'num': 500, 'spec': 'Frost'}}
+
+        # 熔火之心
+        moltenCoreBossID = 673
+        # 黑翼之巢
+        blackwingLairBossID = 630
+        for keyclass in classList:
+            players = self.getPlayerByClass(keyclass)
+
+            _, moltenCoreResult = self.dataFetcher.fetchServerDpsData(5105,moltenCoreBossID,keyclass,classList[keyclass]['spec'],classList[keyclass]['num'])
+            _, blackwingLairResult = self.dataFetcher.fetchServerDpsData(5105,blackwingLairBossID,keyclass,classList[keyclass]['spec'],classList[keyclass]['num'])
+
+
+            for player in players:
+                if moltenCoreResult.has_key(player.name):
+                    player.MoltenCoreServerRank = moltenCoreResult[player.name]
+
+                if blackwingLairResult.has_key(player.name):
+                    player.BlackwingLairServerRank = blackwingLairResult[player.name]
+
+
+
+
+
 
     def printPlayerData(self):
         for server in self.players:
@@ -47,8 +89,10 @@ class PlayerManager:
                 print 'player:' + unicode(player.name.decode('utf8'))
                 print 'MoltenCoreScore:' + str(player.MoltenCoreScore)
                 print 'MoltenCoreRank:' + str(player.MoltenCoreRank)
+                print 'MoltenCoreServerRank:' + str(player.MoltenCoreServerRank)
                 print 'BlackwingLairScore:' + str(player.BlackwingLairScore)
                 print 'BlackwingLairRank:' + str(player.BlackwingLairRank)
+                print 'BlackwingLairServerRank:' + str(player.BlackwingLairServerRank)
 
 
 

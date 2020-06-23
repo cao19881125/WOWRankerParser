@@ -44,7 +44,9 @@ def main():
         print "start update"
         playerManager.refreshData()
         rankerMachine.refreshData(playerManager.players)
+        playerManager.refreshServerRank()
         print "stop update"
+
         time.sleep(3600)
 
 

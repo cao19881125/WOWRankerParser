@@ -102,6 +102,7 @@ class RankerMachine:
                 ptmp['name'] = player.name.decode('utf8')
                 ptmp['score'] = player.MoltenCoreScore
                 ptmp['rank'] = player.MoltenCoreRank
+                ptmp['serverRank'] = player.MoltenCoreServerRank
                 ptmp['url'] = player.url
                 result[pclass]['MoltenCore'].append(ptmp)
 
@@ -111,6 +112,7 @@ class RankerMachine:
                 ptmp['name'] = player.name
                 ptmp['score'] = player.BlackwingLairScore
                 ptmp['rank'] = player.BlackwingLairRank
+                ptmp['serverRank'] = player.BlackwingLairServerRank
                 ptmp['url'] = player.url
                 result[pclass]['BlackwingLair'].append(ptmp)
 

@@ -53,8 +53,43 @@ class DataFetcher:
 
         return result
 
+    # serverid: 娅尔罗:5105
+    # bossid: Molten Core:673 Blackwing Lair:630
+    # pclass:Warrior,Mage ...
+    # pspec:Frost,Fury ...
+    # num: fetch data numbers,multiple of 100
+    def fetchServerDpsData(self,serverid,bossid,pclass,pspec,num):
+
+        resultNumNmae = {}
+        resultNameNum = {}
+
+        for i in range(num/100):
+            url = "https://classic.warcraftlogs.com/zone/rankings/table/1500/bossdps/" \
+                  + str(bossid) + "/3/40/2/" + pclass + "/" + pspec + "/0/" + str(serverid) + "/0/0/0/?search=&page=" \
+                  + str(i + 1) + "&affixes=0&faction=1&dpstype=rdps&restricted=1"
+
+            req = urllib2.Request(url)
+            res_data = urllib2.urlopen(req)
+            res = res_data.read()
+
+            soup = BeautifulSoup(res, 'html.parser')
+
+            for j in range(100):
+                ranknum = i*100 + j + 1
+                rankid = "row-" + str(bossid) + "-" + str(ranknum)
+                ranktr = soup.find_all(id=rankid)
+                if(len(ranktr) > 0 and len(ranktr[0].a.contents) > 0):
+                    name = unicode(ranktr[0].a.contents[0].string).encode('utf8')
+                resultNumNmae[ranknum] = name
+                resultNameNum[name] = ranknum
+
+        return resultNumNmae,resultNameNum
+
 
 if __name__ == "__main__":
-    data_fetcher = DataFetcher()
-    result = data_fetcher.fetchData('娅尔罗','鲜血与雷鸣')
-    print result
+
+    df = DataFetcher()
+    resultNumNmae, resultNameNum = df.fetchServerDpsData(5105,673,"Mage","Frost",100)
+
+    print resultNumNmae[1]
+
