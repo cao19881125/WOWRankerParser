@@ -49,7 +49,7 @@ def main():
         playerManager.refreshServerRank()
         print "stop update server rank data"
 
-        time.sleep(3600)
+        time.sleep(1800)
 
 
     t.join()

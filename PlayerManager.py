@@ -48,12 +48,12 @@ class PlayerManager:
                 except Exception, e:
                     pass
     def refreshServerRank(self):
-        classList = {'Warrior':{'num':800,'spec':'Fury'},
-                     'Mage':{'num':800,'spec':'Frost'},
+        classList = {'Warrior':{'num':1200,'spec':'Fury'},
+                     'Mage':{'num':1200,'spec':'Frost'},
                      'Rogue':{'num':800,'spec':'Assassination'},
                      'Hunter':{'num':500,'spec':'Marksmanship'},
                      'Warlock':{'num':300,'spec':'Destruction'},
-                     'Druid':{'num':300,'spec':'Restoration'},
+                     'Druid':{'num':500,'spec':'Restoration'},
                      'Paladin':{'num':500,'spec':'Holy'},
                      'Priest':{'num':500,'spec':'Holy'}}
 
@@ -64,6 +64,7 @@ class PlayerManager:
         # 黑翼之巢
         blackwingLairBossID = 630
         for keyclass in classList:
+            print "start update " + keyclass + " server rank data"
             players = self.getPlayerByClass(keyclass)
 
             _, moltenCoreResult = self.dataFetcher.fetchServerDpsData(5105,moltenCoreBossID,keyclass,classList[keyclass]['spec'],classList[keyclass]['num'])
@@ -76,6 +77,8 @@ class PlayerManager:
 
                 if blackwingLairResult.has_key(player.name):
                     player.BlackwingLairServerRank = blackwingLairResult[player.name]
+
+            print "finish update " + keyclass + " server rank data"
 
 
 
