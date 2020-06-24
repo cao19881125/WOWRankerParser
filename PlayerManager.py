@@ -75,12 +75,12 @@ class PlayerManager:
                 if moltenCoreResult.has_key(player.name):
                     player.MoltenCoreServerRank = moltenCoreResult[player.name]['rank']
                     player.MoltenCoreServerDPS = moltenCoreResult[player.name]['dps']
-                    player.MoltenCoreServerHref = moltenCoreResult[player.name]['href']
+                    player.MoltenCoreServerHref = "https://classic.warcraftlogs.com/" + moltenCoreResult[player.name]['href']
 
                 if blackwingLairResult.has_key(player.name):
                     player.BlackwingLairServerRank = blackwingLairResult[player.name]['rank']
                     player.BlackwingLairServerDPS = blackwingLairResult[player.name]['dps']
-                    player.BlackwingLairServerHref = blackwingLairResult[player.name]['href']
+                    player.BlackwingLairServerHref = "https://classic.warcraftlogs.com/" + blackwingLairResult[player.name]['href']
 
             print "finish update " + keyclass + " server rank data"
 
