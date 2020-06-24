@@ -27,7 +27,7 @@ class DataFetcher:
         res_data = urllib2.urlopen(req)
         res = res_data.read()
 
-        soup = BeautifulSoup(res, 'html.parser')
+        soup = BeautifulSoup(res, 'html5lib')
 
         classdiv = soup.find_all(id='character-class')
         result['class'] = unicode(classdiv[0].contents[0].string).strip()
@@ -61,7 +61,7 @@ class DataFetcher:
     def fetchServerDpsData(self,serverid,bossid,pclass,pspec,num):
 
         resultNumNmae = {}
-        resultNameNum = {}
+        resultNameInfo = {}
 
         for i in range(num/100):
             url = "https://classic.warcraftlogs.com/zone/rankings/table/1500/bossdps/" \
@@ -76,7 +76,7 @@ class DataFetcher:
             except Exception,e:
                 continue
 
-            soup = BeautifulSoup(res, 'html.parser')
+            soup = BeautifulSoup(res, 'html5lib')
 
             for j in range(100):
                 ranknum = i*100 + j + 1
@@ -84,10 +84,20 @@ class DataFetcher:
                 ranktr = soup.find_all(id=rankid)
                 if(len(ranktr) > 0 and len(ranktr[0].a.contents) > 0):
                     name = unicode(ranktr[0].a.contents[0].string).encode('utf8')
-                resultNumNmae[ranknum] = name
-                resultNameNum[name] = ranknum
+                    href = unicode(ranktr[0].a.get('href')).encode('utf8')
+                else:
+                    continue
 
-        return resultNumNmae,resultNameNum
+                dpstd = ranktr[0].find_all('td', 'players-table-dps')
+                dps = 0
+                if(len(dpstd) > 0 and len(dpstd[0].contents) > 0):
+                    dps = float(unicode(dpstd[0].contents[0].string).strip())
+
+
+                resultNumNmae[ranknum] = name
+                resultNameInfo[name] = {'rank':ranknum,'dps':dps, 'href':href}
+
+        return resultNumNmae,resultNameInfo
 
 
 if __name__ == "__main__":

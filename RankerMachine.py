@@ -104,6 +104,8 @@ class RankerMachine:
                 ptmp['rank'] = player.MoltenCoreRank
                 ptmp['serverRank'] = player.MoltenCoreServerRank
                 ptmp['url'] = player.url
+                ptmp['serverRankDps'] = player.MoltenCoreServerDPS
+                ptmp['serverRankHref'] = player.MoltenCoreServerHref
                 result[pclass]['MoltenCore'].append(ptmp)
 
             result[pclass]["BlackwingLair"] = []
@@ -114,6 +116,8 @@ class RankerMachine:
                 ptmp['rank'] = player.BlackwingLairRank
                 ptmp['serverRank'] = player.BlackwingLairServerRank
                 ptmp['url'] = player.url
+                ptmp['serverRankDps'] = player.BlackwingLairServerDPS
+                ptmp['serverRankHref'] = player.BlackwingLairServerHref
                 result[pclass]['BlackwingLair'].append(ptmp)
 
         return json.dumps(result)
