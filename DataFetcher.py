@@ -68,9 +68,13 @@ class DataFetcher:
                   + str(bossid) + "/3/40/2/" + pclass + "/" + pspec + "/0/" + str(serverid) + "/0/0/0/?search=&page=" \
                   + str(i + 1) + "&affixes=0&faction=1&dpstype=rdps&restricted=1"
 
-            req = urllib2.Request(url)
-            res_data = urllib2.urlopen(req)
-            res = res_data.read()
+            try:
+
+                req = urllib2.Request(url)
+                res_data = urllib2.urlopen(req)
+                res = res_data.read()
+            except Exception,e:
+                continue
 
             soup = BeautifulSoup(res, 'html.parser')
 
