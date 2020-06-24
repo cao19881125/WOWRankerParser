@@ -91,7 +91,7 @@ class DataFetcher:
                 dpstd = ranktr[0].find_all('td', 'players-table-dps')
                 dps = 0
                 if(len(dpstd) > 0 and len(dpstd[0].contents) > 0):
-                    dps = float(unicode(dpstd[0].contents[0].string).strip())
+                    dps = float(unicode(dpstd[0].contents[0].string).strip().replace(',',''))
 
 
                 resultNumNmae[ranknum] = name
